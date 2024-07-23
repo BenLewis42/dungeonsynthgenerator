@@ -1,8 +1,10 @@
+import 'package:dissonantapp2/main.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'home_screen.dart';
 import 'forgot_password_screen.dart';
+import '../widgets/grainy_background_widget.dart'; // Import the BackgroundWidget
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -37,9 +39,9 @@ class _LoginScreenState extends State<LoginScreen> {
           await _storage.delete(key: 'email');
           await _storage.delete(key: 'password');
         }
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => MyHomePage()), 
+          (Route<dynamic> route) => false,
         );
       } on FirebaseAuthException catch (e) {
         String message;
@@ -86,98 +88,102 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         title: Text('Login'),
       ),
-      body: Stack(
-        children: [
-          // Foreground content
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: _isLoading
-                ? Center(child: CircularProgressIndicator())
-                : Column(
-                    children: [
-                      if (_errorMessage != null)
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: Text(
-                            _errorMessage!,
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        ),
-                      Form(
-                        key: _formKey,
-                        child: Column(
-                          children: [
-                            TextFormField(
-                              decoration: InputDecoration(labelText: 'Email'),
-                              keyboardType: TextInputType.emailAddress,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter your email';
-                                }
-                                return null;
-                              },
-                              onChanged: (value) {
-                                setState(() {
-                                  _email = value;
-                                });
-                              },
-                            ),
-                            SizedBox(height: 16.0),
-                            TextFormField(
-                              decoration: InputDecoration(labelText: 'Password'),
-                              obscureText: true,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter your password';
-                                }
-                                return null;
-                              },
-                              onChanged: (value) {
-                                setState(() {
-                                  _password = value;
-                                });
-                              },
-                            ),
-                            CheckboxListTile(
-                              title: Text('Remember me'),
-                              value: _rememberMe,
-                              onChanged: (value) {
-                                setState(() {
-                                  _rememberMe = value!;
-                                });
-                              },
-                            ),
-                            ElevatedButton(
-                              onPressed: _login,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.black,  // Button background color
-                                side: BorderSide(color: Colors.orange, width: 2),  // Orange outline
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.zero,  // Sharp rectangle
-                                ),
-                                minimumSize: Size(200, 50), // Make button slimmer
-                              ),
-                              child: Text(
-                                'Login',
-                                style: TextStyle(color: Colors.orange),  // Text color to match outline
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => ForgotPasswordScreen()),
-                                );
-                              },
-                              child: Text('Forgot Password?'),
-                            ),
-                          ],
+      body: BackgroundWidget(
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: _isLoading
+              ? Center(child: CircularProgressIndicator())
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Add the logo above the login fields
+                    Image.asset(
+                      'assets/dissonantlogo.png', // Update with your logo's path
+                      height: 150, // Adjust the height as needed
+                    ),
+                    SizedBox(height: 15.0),
+                    if (_errorMessage != null)
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Text(
+                          _errorMessage!,
+                          style: TextStyle(color: Colors.red),
                         ),
                       ),
-                    ],
-                  ),
-          ),
-        ],
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            decoration: InputDecoration(labelText: 'Email'),
+                            keyboardType: TextInputType.emailAddress,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your email';
+                              }
+                              return null;
+                            },
+                            onChanged: (value) {
+                              setState(() {
+                                _email = value;
+                              });
+                            },
+                          ),
+                          SizedBox(height: 16.0),
+                          TextFormField(
+                            decoration: InputDecoration(labelText: 'Password'),
+                            obscureText: true,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your password';
+                              }
+                              return null;
+                            },
+                            onChanged: (value) {
+                              setState(() {
+                                _password = value;
+                              });
+                            },
+                          ),
+                          CheckboxListTile(
+                            title: Text('Remember me'),
+                            value: _rememberMe,
+                            onChanged: (value) {
+                              setState(() {
+                                _rememberMe = value!;
+                              });
+                            },
+                          ),
+                          ElevatedButton(
+                            onPressed: _login,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.black,  // Button background color
+                              side: BorderSide(color: Colors.orange, width: 2),  // Orange outline
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.zero,  // Sharp rectangle
+                              ),
+                              minimumSize: Size(200, 50), // Make button slimmer
+                            ),
+                            child: Text(
+                              'Login',
+                              style: TextStyle(color: Colors.orange),  // Text color to match outline
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => ForgotPasswordScreen()),
+                              );
+                            },
+                            child: Text('Forgot Password?'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+        ),
       ),
     );
   }

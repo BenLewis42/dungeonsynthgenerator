@@ -9,4 +9,9 @@ const String emailVerificationRoute = '/email_verification';
 const String forgotPasswordRoute = '/forgot_password';
 const String adminDashboardRoute = '/admin_dashboard';
 const String tasteProfileRoute = '/taste_profile';
+const String returnAlbumRoute = '/return_album';
+const String paymentRoute = '/payment';
+
+
+
 

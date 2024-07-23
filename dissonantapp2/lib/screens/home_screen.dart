@@ -1,13 +1,13 @@
-import 'package:dissonantapp2/widgets/carousel_widget.dart';
+import 'package:dissonantapp2/widgets/grainy_background_widget.dart';
 import 'package:flutter/material.dart';
 import 'order_screen.dart';
 import 'mymusic_screen.dart';
 import 'profile_screen.dart';
 import '../widgets/bottom_navigation_widget.dart'; // Import the BottomNavigationWidget
+import '../widgets/carousel_widget.dart';
 
 class HomeScreen extends StatefulWidget {
-
-   final List<String> imgList = [
+  final List<String> imgList = [
     'assets/cd_carousel/hcd003.png',
     'assets/cd_carousel/hcd004.png',
     'assets/cd_carousel/hcd005.png',
@@ -34,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [];
+
   @override
   void initState() {
     super.initState();
@@ -61,18 +62,13 @@ class _HomeScreenState extends State<HomeScreen> {
     ]);
   }
 
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
-      body: _pages[_selectedIndex],
+      body: BackgroundWidget(
+        child: _pages[_selectedIndex],
+      ),
+
     );
   }
 }

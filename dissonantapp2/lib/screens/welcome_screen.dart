@@ -52,7 +52,7 @@ class WelcomeScreen extends StatelessWidget {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,  // Button background color
+                      backgroundColor: Colors.orange,  // Button background color
                       side: BorderSide(color: Colors.orange, width: 2),  // Orange outline
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.zero,  // Sharp rectangle
@@ -61,7 +61,7 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                     child: Text(
                       'Login',
-                      style: TextStyle(color: Colors.orange),  // Text color to match outline
+                      style: TextStyle(color: Colors.white),  // Text color to match outline
                     ),
                   ),
                   SizedBox(height: 16.0),  // Add some space between the buttons
@@ -73,7 +73,7 @@ class WelcomeScreen extends StatelessWidget {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,  // Button background color
+                      backgroundColor: Colors.orange,  // Button background color
                       side: BorderSide(color: Colors.orange, width: 2),  // Orange outline
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.zero,  // Sharp rectangle
@@ -82,7 +82,7 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                     child: Text(
                       'Sign Up',
-                      style: TextStyle(color: Colors.orange),  // Text color to match outline
+                      style: TextStyle(color: Colors.white),  // Text color to match outline
                     ),
                   ),
                   Spacer(flex: 2),  // Add space below the buttons

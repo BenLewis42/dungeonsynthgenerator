@@ -1,7 +1,8 @@
+import 'package:dissonantapp2/main.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'home_screen.dart'; // Make sure to import MyHomePage
 
 class TasteProfileScreen extends StatefulWidget {
   @override
@@ -15,7 +16,7 @@ class _TasteProfileScreenState extends State<TasteProfileScreen> {
   String _albumsListened = '';
 
   final List<String> _genres = [
-    'Rock', 'Pop', 'Jazz', 'Classical', 'Hip-hop', 'Country', 'Electronic', 'Metal', 'Country', 'Folk', 'Experimental', 'Alternative', 'R&B'
+    'Rock', 'Pop', 'Jazz', 'Classical', 'Hip-hop', 'Country', 'Electronic', 'Metal', 'Folk', 'Experimental', 'Alternative', 'R&B'
   ];
 
   final List<String> _albumsListenedOptions = [
@@ -29,7 +30,10 @@ class _TasteProfileScreenState extends State<TasteProfileScreen> {
         'albumsListened': _albumsListened,
       },
     });
-    Navigator.pushReplacementNamed(context, '/home');
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (context) => MyHomePage()), 
+      (Route<dynamic> route) => false,
+    );
   }
 
   @override

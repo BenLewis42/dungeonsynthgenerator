@@ -1,3 +1,6 @@
+import 'package:dissonantapp2/screens/payment_screen.dart';
+import 'package:dissonantapp2/screens/return_album_screen.dart';
+import 'package:dissonantapp2/screens/taste_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +18,8 @@ import 'screens/emailverification_screen.dart';
 import 'screens/forgot_password_screen.dart';
 import 'models/order_model.dart';
 import 'widgets/app_bar_widget.dart';
-import 'widgets/bottom_navigation_widget.dart';  // Import the bottom navigation widget
+import 'widgets/bottom_navigation_widget.dart'; 
+import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +35,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => OrderModel()),
       ],
       child: MaterialApp(
-        title: 'Dissonant',
+        title: 'DISSONANT',
         theme: ThemeData(
           brightness: Brightness.dark,
           primaryColor: Color(0xFFFFA500), // Orange
@@ -48,9 +52,11 @@ class MyApp extends StatelessWidget {
             onSurface: Colors.white,
             onError: Colors.white,
           ),
-          textTheme: TextTheme(
-            bodyLarge: TextStyle(color: Colors.white),
-            bodyMedium: TextStyle(color: Colors.white),
+          textTheme: GoogleFonts.figtreeTextTheme(
+            ThemeData.dark().textTheme,
+          ).apply(
+            bodyColor: Colors.white,
+            displayColor: Colors.white,
           ),
           appBarTheme: AppBarTheme(
             color: Colors.black,
@@ -67,6 +73,8 @@ class MyApp extends StatelessWidget {
           registrationRoute: (context) => RegistrationScreen(),
           forgotPasswordRoute: (context) => ForgotPasswordScreen(),
           emailVerificationRoute: (context) => EmailVerificationScreen(),
+          tasteProfileRoute: (context) => TasteProfileScreen(),
+
         },
         home: AuthenticationWrapper(),
       ),
@@ -121,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Dissonant'),  // Use the custom AppBar
+      appBar: CustomAppBar(title: 'DISSONANT'),  // Use the custom AppBar
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationWidget(
         currentIndex: _selectedIndex,

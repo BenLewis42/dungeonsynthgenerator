@@ -51,6 +51,29 @@ class FirestoreService {
     }
   }
 
+  Future<DocumentSnapshot> getUserStats(String userId) async {
+    return await _firestore.collection('users').doc(userId).get();
+  }
+
+   Future<Map<String, int>> getUserAlbumStats(String userId) async {
+    final QuerySnapshot keptAlbumsQuery = await _firestore
+        .collection('orders')
+        .where('userId', isEqualTo: userId)
+        .where('status', isEqualTo: 'kept')
+        .get();
+
+    final QuerySnapshot sentBackAlbumsQuery = await _firestore
+        .collection('orders')
+        .where('userId', isEqualTo: userId)
+        .where('status', isEqualTo: 'returnedConfirmed')
+        .get();
+
+    return {
+      'albumsKept': keptAlbumsQuery.docs.length,
+      'albumsSentBack': sentBackAlbumsQuery.docs.length,
+    };
+  }
+
   Future<void> submitFeedback(String orderId, Map<String, dynamic> feedback) async {
     await _firestore.collection('orders').doc(orderId).update({'feedback': feedback});
   }
@@ -63,6 +86,10 @@ class FirestoreService {
   Future<List<DocumentSnapshot>> getAllUsers() async {
     QuerySnapshot snapshot = await _firestore.collection('users').get();
     return snapshot.docs;
+  }
+
+  Future<DocumentSnapshot> getOrderById(String orderId) async {
+    return await _firestore.collection('orders').doc(orderId).get();
   }
 
   Future<List<DocumentSnapshot>> getOrdersForUser(String userId) async {
